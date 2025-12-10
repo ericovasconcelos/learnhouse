@@ -17,6 +17,14 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+
+  // ADICIONE ESTE BLOCO:
+  env: {
+    NEXT_PUBLIC_LEARNHOUSE_API_URL: process.env.NEXT_PUBLIC_LEARNHOUSE_API_URL,
+    NEXT_PUBLIC_LEARNHOUSE_BACKEND_URL: process.env.NEXT_PUBLIC_LEARNHOUSE_BACKEND_URL,
+    NEXT_PUBLIC_LEARNHOUSE_DOMAIN: process.env.NEXT_PUBLIC_LEARNHOUSE_DOMAIN,
+    NEXT_PUBLIC_LEARNHOUSE_Top_DOMAIN: process.env.NEXT_PUBLIC_LEARNHOUSE_Top_DOMAIN,
+  },
 }
 
 module.exports = nextConfig
