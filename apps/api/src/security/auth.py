@@ -25,7 +25,7 @@ class Settings(BaseModel):
         False if isDevModeEnabled() else timedelta(hours=8).total_seconds()
     )
     authjwt_cookie_samesite = "lax"
-    authjwt_cookie_secure = True
+    authjwt_cookie_secure = get_learnhouse_config().hosting_config.ssl
     authjwt_cookie_domain = get_learnhouse_config().hosting_config.cookie_config.domain
 
 

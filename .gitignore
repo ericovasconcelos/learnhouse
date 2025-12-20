@@ -46,3 +46,7 @@ __pycache__/
 # Flyio
 .flyio/
 fly.toml
+
+# local hotfixes and backups
+fix_login.sh
+learnhouse.env
