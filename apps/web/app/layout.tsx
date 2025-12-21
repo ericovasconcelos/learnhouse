@@ -1,50 +1,26 @@
-'use client'
-import '../styles/globals.css'
-import StyledComponentsRegistry from '../components/Utils/libs/styled-registry'
-import { motion } from 'framer-motion'
-import { SessionProvider } from 'next-auth/react'
-import LHSessionProvider from '@components/Contexts/LHSessionContext'
-import { isDevEnv } from './auth/options'
-import Script from 'next/script'
+import { cookies } from 'next/headers';
+import ClientLayout from './ClientLayout';
+import { AbstractIntlMessages } from 'next-intl';
 
-import { NextIntlClientProvider } from 'next-intl';
-import messages from '../messages/en.json';
-
-export default function RootLayout({
-  children,
+export default async function RootLayout({
+    children,
 }: {
-  children: React.ReactNode
+    children: React.ReactNode;
 }) {
-  const variants = {
-    hidden: { opacity: 0, x: 0, y: 0 },
-    enter: { opacity: 1, x: 0, y: 0 },
-    exit: { opacity: 0, x: 0, y: 0 },
-  }
-  return (
-    <html className="" lang="en">
-      <head />
-      <body>
-        {/* Inject runtime configuration for client-side access */}
-        <Script src="/runtime-config.js" strategy="beforeInteractive" />
-        {isDevEnv ? '' : <Script data-website-id="a1af6d7a-9286-4a1f-8385-ddad2a29fcbb" src="/umami/script.js" />}
-        <NextIntlClientProvider locale="en" messages={messages}>
-          <SessionProvider key="session-provider" refetchInterval={60000}>
-            <LHSessionProvider>
-              <StyledComponentsRegistry>
-                <motion.main
-                  variants={variants} // Pass the variant object into Framer Motion
-                  initial="hidden" // Set the initial state to variants.hidden
-                  animate="enter" // Animated state to variants.enter
-                  exit="exit" // Exit state (used later) to variants.exit
-                  transition={{ type: 'tween' }} // Set the transition to tween
-                >
-                  {children}
-                </motion.main>
-              </StyledComponentsRegistry>
-            </LHSessionProvider>
-          </SessionProvider>
-        </NextIntlClientProvider>
-      </body>
-    </html>
-  )
+    const cookieStore = cookies();
+    const locale = cookieStore.get('NEXT_LOCALE')?.value || 'en';
+
+    let messages: AbstractIntlMessages;
+    try {
+        messages = (await import(`../messages/${locale}.json`)).default;
+    } catch (error) {
+        // If translation not found, fallback to default (en)
+        messages = (await import(`../messages/en.json`)).default;
+    }
+
+    return (
+        <ClientLayout locale={locale} messages={messages}>
+            {children}
+        </ClientLayout>
+    );
 }
