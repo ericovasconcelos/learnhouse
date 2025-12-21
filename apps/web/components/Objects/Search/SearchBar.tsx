@@ -70,6 +70,7 @@ interface SearchBarProps {
   className?: string;
   isMobile?: boolean;
   showSearchSuggestions?: boolean;
+  placeholder?: string;
 }
 
 const CourseResultsSkeleton = () => (
@@ -90,11 +91,12 @@ const CourseResultsSkeleton = () => (
   </div>
 );
 
-export const SearchBar: React.FC<SearchBarProps> = ({ 
-  orgslug, 
-  className = '', 
+export const SearchBar: React.FC<SearchBarProps> = ({
+  orgslug,
+  className = '',
   isMobile = false,
   showSearchSuggestions = false,
+  placeholder = "Search courses, users, collections..."
 }) => {
   const org = useOrg() as any;
   const [searchQuery, setSearchQuery] = useState('');
@@ -141,12 +143,12 @@ export const SearchBar: React.FC<SearchBarProps> = ({
           null,
           session?.data?.tokens?.access_token
         );
-        
+
         console.log('Search API Response:', response); // Debug log
 
         // Type assertion and safe access
         const typedResponse = response.data as any;
-        
+
         // Ensure we have the correct structure and handle potential undefined values
         const processedResults: SearchResults = {
           courses: Array.isArray(typedResponse?.courses) ? typedResponse.courses : [],
@@ -155,7 +157,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
         };
 
         console.log('Processed Results:', processedResults); // Debug log
-        
+
         setSearchResults(processedResults);
       } catch (error) {
         console.error('Error searching content:', error);
@@ -225,12 +227,12 @@ export const SearchBar: React.FC<SearchBarProps> = ({
   }, [searchQuery, searchTerms, orgslug]);
 
   const MemoizedQuickResults = useMemo(() => {
-    const hasResults = searchResults.courses.length > 0 || 
-                      searchResults.collections.length > 0 || 
-                      searchResults.users.length > 0;
-    
+    const hasResults = searchResults.courses.length > 0 ||
+      searchResults.collections.length > 0 ||
+      searchResults.users.length > 0;
+
     if (!hasResults) return null;
-    
+
     return (
       <div className="p-2">
         <div className="flex items-center gap-2 px-2 py-2 text-sm text-black/50">
@@ -359,7 +361,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
           value={searchQuery}
           onChange={handleSearchChange}
           onFocus={() => setShowResults(true)}
-          placeholder="Search courses, users, collections..."
+          placeholder={placeholder}
           className="w-full h-9 pl-11 pr-4 rounded-xl nice-shadow bg-white 
                      focus:outline-none focus:ring-1 focus:ring-black/5 focus:border-black/20 
                      text-sm placeholder:text-black/40 transition-all"
@@ -369,7 +371,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
         </div>
       </div>
 
-      <div 
+      <div
         className={`absolute z-50 w-full mt-2 bg-white rounded-xl nice-shadow 
                    overflow-hidden divide-y divide-black/5
                    transition-all duration-200 ease-in-out transform
@@ -386,18 +388,18 @@ export const SearchBar: React.FC<SearchBarProps> = ({
             ) : (
               <>
                 {MemoizedQuickResults}
-                {((searchResults.courses.length > 0 || 
-                   searchResults.collections.length > 0 || 
-                   searchResults.users.length > 0) || 
-                   searchQuery.trim()) && (
-                  <Link
-                    href={getUriWithOrg(orgslug, `/search?q=${encodeURIComponent(searchQuery)}`)}
-                    className="flex items-center justify-between px-4 py-2.5 text-xs text-black/50 hover:text-black/70 hover:bg-black/[0.02] transition-colors"
-                  >
-                    <span>View all results</span>
-                    <ArrowRight size={14} />
-                  </Link>
-                )}
+                {((searchResults.courses.length > 0 ||
+                  searchResults.collections.length > 0 ||
+                  searchResults.users.length > 0) ||
+                  searchQuery.trim()) && (
+                    <Link
+                      href={getUriWithOrg(orgslug, `/search?q=${encodeURIComponent(searchQuery)}`)}
+                      className="flex items-center justify-between px-4 py-2.5 text-xs text-black/50 hover:text-black/70 hover:bg-black/[0.02] transition-colors"
+                    >
+                      <span>View all results</span>
+                      <ArrowRight size={14} />
+                    </Link>
+                  )}
               </>
             )}
           </>
