@@ -4,7 +4,10 @@ import { BookCopy, Signpost, SquareLibrary } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
 
+import { useTranslations } from 'next-intl'
+
 function MenuLinks(props: { orgslug: string }) {
+  const t = useTranslations('Common')
   return (
     <div className='pl-1'>
       <ul className="flex space-x-5">
@@ -12,17 +15,20 @@ function MenuLinks(props: { orgslug: string }) {
           link="/courses"
           type="courses"
           orgslug={props.orgslug}
+          label={t('courses')}
         ></LinkItem>
         <LinkItem
           link="/collections"
           type="collections"
           orgslug={props.orgslug}
+          label={t('collections')}
         ></LinkItem>
         <AuthenticatedClientElement checkMethod="authentication">
           <LinkItem
             link="/trail"
             type="trail"
             orgslug={props.orgslug}
+            label={t('progress')}
           ></LinkItem>
         </AuthenticatedClientElement>
       </ul>
@@ -37,22 +43,22 @@ const LinkItem = (props: any) => {
       <li className="flex space-x-2 items-center text-[#909192] font-medium">
         {props.type == 'courses' && (
           <>
-            <BookCopy size={20}  />{' '}
-            <span>Courses</span>
+            <BookCopy size={20} />{' '}
+            <span>{props.label}</span>
           </>
         )}
 
         {props.type == 'collections' && (
           <>
             <SquareLibrary size={20} />{' '}
-            <span>Collections</span>
+            <span>{props.label}</span>
           </>
         )}
 
         {props.type == 'trail' && (
           <>
             <Signpost size={20} />{' '}
-            <span>Progress</span>
+            <span>{props.label}</span>
           </>
         )}
       </li>

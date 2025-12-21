@@ -1,0 +1,16 @@
+{
+    "Common": {
+        "home": "Início",
+        "courses": "Cursos",
+        "collections": "Coleções",
+        "progress": "Progresso"
+    },
+    "Auth": {
+        "login": "Entrar",
+        "signup": "Cadastrar",
+        "logout": "Sair"
+    },
+    "OrgMenu": {
+        "searchPlaceholder": "Buscar cursos, usuários..."
+    }
+}

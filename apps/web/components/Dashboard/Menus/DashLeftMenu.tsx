@@ -161,34 +161,34 @@ function DashLeftMenu() {
               <div className="flex flex-col space-y-1 py-1">
                 <ToolTip
                   content={session.data.user.username + "'s Owned Courses"}
-                slateBlack
-                sideOffset={8}
-                side="right"
-              >
-                <Link
+                  slateBlack
+                  sideOffset={8}
+                  side="right"
+                >
+                  <Link
                     href={'/dash/user-account/owned'}
                     className="py-1"
-                >
-                  <Package2
-                    className="mx-auto text-neutral-400 cursor-pointer"
-                    size={18}
-                  />
-                </Link>
-              </ToolTip>
+                  >
+                    <Package2
+                      className="mx-auto text-neutral-400 cursor-pointer"
+                      size={18}
+                    />
+                  </Link>
+                </ToolTip>
                 <ToolTip
                   content={session.data.user.username + "'s Settings"}
-                slateBlack
-                sideOffset={8}
-                side="right"
-              >
-                <Link
-                  href={'/dash/user-account/settings/general'}
-                  className="py-1"
+                  slateBlack
+                  sideOffset={8}
+                  side="right"
                 >
-                  <Settings
-                    className="mx-auto text-neutral-400 cursor-pointer"
-                    size={18}
-                  />
+                  <Link
+                    href={'/dash/user-account/settings/general'}
+                    className="py-1"
+                  >
+                    <Settings
+                      className="mx-auto text-neutral-400 cursor-pointer"
+                      size={18}
+                    />
                   </Link>
                 </ToolTip>
               </div>

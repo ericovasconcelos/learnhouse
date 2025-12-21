@@ -1,0 +1,16 @@
+{
+    "Common": {
+        "home": "Home",
+        "courses": "Courses",
+        "collections": "Collections",
+        "progress": "Progress"
+    },
+    "Auth": {
+        "login": "Login",
+        "signup": "Sign up",
+        "logout": "Logout"
+    },
+    "OrgMenu": {
+        "searchPlaceholder": "Search courses, users..."
+    }
+}

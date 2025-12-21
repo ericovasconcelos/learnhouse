@@ -7,6 +7,9 @@ import LHSessionProvider from '@components/Contexts/LHSessionContext'
 import { isDevEnv } from './auth/options'
 import Script from 'next/script'
 
+import { NextIntlClientProvider } from 'next-intl';
+import messages from '../messages/en.json';
+
 export default function RootLayout({
   children,
 }: {
@@ -24,21 +27,23 @@ export default function RootLayout({
         {/* Inject runtime configuration for client-side access */}
         <Script src="/runtime-config.js" strategy="beforeInteractive" />
         {isDevEnv ? '' : <Script data-website-id="a1af6d7a-9286-4a1f-8385-ddad2a29fcbb" src="/umami/script.js" />}
-        <SessionProvider key="session-provider" refetchInterval={60000}>
-          <LHSessionProvider>
-            <StyledComponentsRegistry>
-              <motion.main
-                variants={variants} // Pass the variant object into Framer Motion
-                initial="hidden" // Set the initial state to variants.hidden
-                animate="enter" // Animated state to variants.enter
-                exit="exit" // Exit state (used later) to variants.exit
-                transition={{ type: 'tween' }} // Set the transition to tween
-              >
-                {children}
-              </motion.main>
-            </StyledComponentsRegistry>
-          </LHSessionProvider>
-        </SessionProvider>
+        <NextIntlClientProvider locale="en" messages={messages}>
+          <SessionProvider key="session-provider" refetchInterval={60000}>
+            <LHSessionProvider>
+              <StyledComponentsRegistry>
+                <motion.main
+                  variants={variants} // Pass the variant object into Framer Motion
+                  initial="hidden" // Set the initial state to variants.hidden
+                  animate="enter" // Animated state to variants.enter
+                  exit="exit" // Exit state (used later) to variants.exit
+                  transition={{ type: 'tween' }} // Set the transition to tween
+                >
+                  {children}
+                </motion.main>
+              </StyledComponentsRegistry>
+            </LHSessionProvider>
+          </SessionProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   )

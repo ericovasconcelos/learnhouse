@@ -9,8 +9,10 @@ import { useLHSession } from '@components/Contexts/LHSessionContext'
 import { useOrg } from '@components/Contexts/OrgContext'
 import { SearchBar } from '@components/Objects/Search/SearchBar'
 import { usePathname } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 
 export const OrgMenu = (props: any) => {
+  const t = useTranslations('OrgMenu')
   const orgslug = props.orgslug
   const session = useLHSession() as any;
   const access_token = session?.data?.tokens?.access_token;
@@ -74,7 +76,7 @@ export const OrgMenu = (props: any) => {
           <div className="flex items-center space-x-5 md:w-auto w-full">
             <div className="logo flex md:w-auto w-full justify-center">
               <Link href={getUriWithOrg(orgslug, '/')}>
-                <div className="flex w-auto h-9 rounded-md items-center m-auto py-1 justify-center">
+                <div className="flex w-auto h-[55px] rounded-md items-center m-auto justify-center">
                   {org?.logo_image ? (
                     <img
                       src={`${getOrgLogoMediaDirectory(org.org_uuid, org?.logo_image)}`}
@@ -92,10 +94,10 @@ export const OrgMenu = (props: any) => {
               <MenuLinks orgslug={orgslug} />
             </div>
           </div>
-          
+
           {/* Search Section */}
           <div className="hidden md:flex flex-1 justify-center max-w-lg px-4">
-            <SearchBar orgslug={orgslug} className="w-full" />
+            <SearchBar orgslug={orgslug} className="w-full" placeholder={t('searchPlaceholder')} />
           </div>
 
           <div className="flex items-center space-x-4">
@@ -120,14 +122,13 @@ export const OrgMenu = (props: any) => {
         </div>
       </div>
       <div
-        className={`fixed inset-x-0 z-40 bg-white/80 backdrop-blur-lg md:hidden shadow-lg transition-all duration-300 ease-in-out ${
-          isMenuOpen ? 'top-[60px] opacity-100' : '-top-full opacity-0'
-        }`}
+        className={`fixed inset-x-0 z-40 bg-white/80 backdrop-blur-lg md:hidden shadow-lg transition-all duration-300 ease-in-out ${isMenuOpen ? 'top-[60px] opacity-100' : '-top-full opacity-0'
+          }`}
       >
         <div className="flex flex-col px-4 py-3 space-y-4 justify-center items-center">
           {/* Mobile Search */}
           <div className="w-full px-2">
-            <SearchBar orgslug={orgslug} isMobile={true} />
+            <SearchBar orgslug={orgslug} isMobile={true} placeholder={t('searchPlaceholder')} />
           </div>
           <div className='py-4'>
             <MenuLinks orgslug={orgslug} />
