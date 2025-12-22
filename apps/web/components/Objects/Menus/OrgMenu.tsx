@@ -10,6 +10,7 @@ import { useOrg } from '@components/Contexts/OrgContext'
 import { SearchBar } from '@components/Objects/Search/SearchBar'
 import { usePathname } from 'next/navigation'
 import { useTranslations } from 'next-intl'
+import LanguageSwitcher from '../../Utils/LanguageSwitcher'
 
 export const OrgMenu = (props: any) => {
   const t = useTranslations('OrgMenu')
